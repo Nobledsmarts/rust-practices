@@ -1,4 +1,5 @@
-use std::collections::HashMap;
+use std::sync::Mutex;
+use std::{collections::HashMap, thread};
 
 struct User {
     username: String,
@@ -50,7 +51,104 @@ impl Message {
     }
 }
 
-fn main(){
+#[test]
+fn iterator_demonstration() {
+    let v1 = vec![1, 2, 3];
+
+    let mut v1_iter = v1.iter();
+
+    assert_eq!(v1_iter.next(), Some(&1));
+    assert_eq!(v1_iter.next(), Some(&2));
+    assert_eq!(v1_iter.next(), Some(&3));
+    assert_eq!(v1_iter.next(), None);
+}
+
+// use std::thread;
+use std::time::Duration;
+
+// use std::sync::Mutex;
+// use std::thread;
+
+fn main() {
+    let counter = Mutex::new(0);
+    let mut handles = vec![];
+
+    for _ in 0..10 {
+        let handle = thread::spawn(move || {
+            let mut num = counter.lock().unwrap();
+
+            *num += 1;
+        });
+        handles.push(handle);
+    }
+
+    for handle in handles {
+        handle.join().unwrap();
+    }
+
+    // drop(handle);
+
+    println!("Result: {}", *counter.lock().unwrap());
+}
+
+fn mai5() {
+    let handle = thread::spawn(|| {
+        for i in 1..10 {
+            println!("hi number {i} from the spawned thread!");
+            thread::sleep(Duration::from_millis(1));
+        }
+    });
+
+    for i in 1..5 {
+        println!("hi number {i} from the main thread!");
+        thread::sleep(Duration::from_millis(1));
+    }
+
+    handle.join().unwrap();
+}
+
+fn main3() {
+
+    let mut list = vec![1, 2, 3];
+    println!("Before defining closure: {list:?}");
+
+    let mut borrows_mutably = || list.push(7);
+
+    // println!("After calling closure: {list:?}");
+    
+    borrows_mutably();
+    
+
+    println!("After calling closure: {list:?}");
+} 
+
+
+fn main2() {
+    let target = "thread";
+
+    let handle = thread::spawn(move || {
+        let msg = "testing from ".to_string();
+        let target = "rust thread";
+
+
+        return msg + target;
+        // return String::from(format!(("testing from {target} " + target)));
+    });
+
+    let result = handle.join().unwrap();
+
+    println!("{}", result);
+}
+
+fn ma(){
+    let sum = |a : i32, b: i32| {
+        a + b
+    };
+
+    println!("{}", sum(3, 6));
+}
+
+fn main1(){
     let m = Message::Write(String::from("hello"));
     m.call();
 
