@@ -70,26 +70,37 @@ use std::time::Duration;
 // use std::thread;
 
 fn main() {
-    let counter = Mutex::new(0);
-    let mut handles = vec![];
+    let s1 = String::from("Hello, ");
+    let s2 = String::from("world");
 
-    for _ in 0..10 {
-        let handle = thread::spawn(move || {
-            let mut num = counter.lock().unwrap();
+    let s3 = s1.clone() + &s2;
 
-            *num += 1;
-        });
-        handles.push(handle);
-    }
+    // println!("")
 
-    for handle in handles {
-        handle.join().unwrap();
-    }
-
-    // drop(handle);
-
-    println!("Result: {}", *counter.lock().unwrap());
+    println!("{s3:?} --- {s1:?}");
 }
+
+// fn main5() {
+//     let counter = Mutex::new(0);
+//     let mut handles = vec![];
+
+//     for _ in 0..10 {
+//         let handle = thread::spawn(|| {
+//             let mut num = counter.lock().unwrap();
+
+//             *num += 1;
+//         });
+//         handles.push(handle);
+//     }
+
+//     for handle in handles {
+//         handle.join().unwrap();
+//     }
+
+//     // drop(handle);
+
+//     // println!("Result: {}", *counter.lock().unwrap());
+// }
 
 fn mai5() {
     let handle = thread::spawn(|| {

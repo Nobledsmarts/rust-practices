@@ -1,0 +1,1 @@
+C:\rust-learning\invaders\target\debug\invaders.exe: C:\rust-learning\invaders\src\frame.rs C:\rust-learning\invaders\src\lib.rs C:\rust-learning\invaders\src\main.rs C:\rust-learning\invaders\src\player.rs C:\rust-learning\invaders\src\render.rs
